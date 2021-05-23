@@ -15,15 +15,17 @@ for column in COLUMNS:
                 'Kategori-' + row['Kategori'],
                 'Merk-' + row['Merk'],
             }
-        elif column == 'Harga':
-            graph_dict['Harga-' + row['Harga']] = {
-                'Nama-' + row['Nama'],
-            }
-        elif column == 'Kategori':
-            graph_dict['Kategori-' + row['Kategori']] = {
-                'Nama-' + row['Nama'],
-            }
-        elif column == 'Merk':
-            graph_dict['Merk-' + row['Merk']] = {
-                'Nama-' + row['Nama'],
-            }
+        else:
+            try:
+                graph_dict[f'{column}-' + row[column]].add(
+                    'Nama-' + row['Nama']
+                )
+            except KeyError:
+                graph_dict[f'{column}-' + row[column]] = {
+                    'Nama-' + row['Nama'],
+                }
+
+
+if __name__ == '__main__':
+    from pprint import pprint
+    pprint(graph_dict)
